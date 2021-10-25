@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <Task Name="Fast_Task" Id="{1544f09e-d1fd-44c2-807b-ddd0fb67c375}">
+    <!--CycleTime in micro seconds.-->
+    <CycleTime>1000</CycleTime>
+    <Priority>1</Priority>
+    <PouCall>
+      <Name>RobotMapping</Name>
+    </PouCall>
+    <TaskFBGuid>{c8d8a5ec-1675-4230-a58d-e1c14284ea18}</TaskFBGuid>
+    <Fb_init>{80161426-e0c4-409d-b155-1044c1c6ee06}</Fb_init>
+    <Fb_exit>{81ca10e7-f656-456b-a1d5-9dfe567b30a7}</Fb_exit>
+    <CycleUpdate>{3aa94867-1475-4cff-8460-a8f0bd94435b}</CycleUpdate>
+    <PostCycleUpdate>{9e5bc57f-c8ea-48a9-bc35-c001e2bd6a8b}</PostCycleUpdate>
+  </Task>
+</TcPlcObject>

@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="EmgFunctions" Id="{4f6cc664-5ec1-4c65-b2cd-a31cedceda89}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM EmgFunctions
+VAR_INPUT
+	ActivateEStop2 : BOOL;	
+END_VAR
+VAR
+	qResetEmergencyStop  AT %Q* : BOOL;
+	qErrorAcknowledgement AT %Q* : BOOL;
+	
+	qEstopLamp AT %Q* : BOOL;
+	iResetEmergencyStop  AT %I* : BOOL;
+	iEstopOkFromSafety AT %I* : BOOL;
+	qSafetyRun AT %Q* : BOOL;
+	
+	noOfBlinks : INT := 1;
+	blinker : Pulser := (ShortPulseWidth:=T#200MS, LongPulseWidth:=T#3S, DeadPulseWidth:=T#150MS);
+	RedBlink : Pulser := (ShortPulseWidth:=T#200MS, LongPulseWidth:=T#300MS, DeadPulseWidth:=T#200MS);
+	RedBlinkFlag : BOOL;
+	TmpBlink1 : BOOL;
+	Pulstimer : TP;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[qSafetyRun := TRUE;
+// Reset Error in safety PLC
+IF iResetEmergencyStop THEN
+	Pulstimer(IN:=TRUE,PT:=T#300MS);
+	qErrorAcknowledgement := PulsTimer.Q;
+	TmpBlink1 := PulsTimer.Q;
+//	qResetDoor1ToSafety := iZone1IsActiv; 
+//	qResetDoor2ToSafety := iZone2IsActiv; 
+	qResetEmergencyStop := RedBlinkFlag;
+ELSE
+	TmpBlink1 := FALSE;
+	PulsTimer(IN:=FALSE);
+	qResetEmergencyStop := FALSE;	
+END_IF
+]]></ST>
+    </Implementation>
+    <LineIds Name="EmgFunctions">
+      <LineId Id="5" Count="0" />
+      <LineId Id="15" Count="12" />
+      <LineId Id="14" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

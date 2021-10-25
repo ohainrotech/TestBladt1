@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="RobotMapping" Id="{90c0f3eb-dfba-4bfe-8818-505db9a89bcc}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM RobotMapping
+VAR
+	TmpByte : BYTE;
+	DelayRobOffOutput : TON := (PT:=T#5S);
+	TOutCom : TOF := (PT:=T#1S);
+	RobotOff : BOOL := FALSE;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//--- If EIP communication is running -----------------
+TOutCom(IN :=(GVL_Robot_Io_Map.uintD4_B17_EIB_constate = 0));
+
+//update outputs
+IF (TOutCom.Q) THEN
+//--- Power Cabinet Outputs from Robot--------------------------------
+	//EL2008 (T3)
+	GVL_Robot_Io_Map.bOutT3_PLC 		:= GVL_Robot_Io_Map.bInT3_EIP;
+	
+	DelayRobOffOutput(IN := FALSE);
+ELSE //--- Else write 0 to outputs
+	GVL_Robot_Io_Map.bOutT3_PLC 		:= 0;
+	DelayRobOffOutput(IN := TRUE);
+END_IF
+
+//--- Power Cabinet Inputs to Robot --------------------------------
+	//EL1008 (T2)
+GVL_Robot_Io_Map.bOutT2_EIP 		:= GVL_Robot_Io_Map.bInT2_PLC ;
+]]></ST>
+    </Implementation>
+    <LineIds Name="RobotMapping">
+      <LineId Id="13" Count="4" />
+      <LineId Id="28" Count="2" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="23" Count="2" />
+      <LineId Id="18" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

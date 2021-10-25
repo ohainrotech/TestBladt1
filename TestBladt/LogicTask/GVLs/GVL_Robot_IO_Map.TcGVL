@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <GVL Name="GVL_Robot_IO_Map" Id="{eb23126d-5911-44f9-b137-8437592e7123}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+//--- POwer Cabinet -----------
+	//EL1008 (T2) Input
+	bInT2_PLC 			AT %I* :BYTE;
+	bOutT2_EIP 			AT %Q* :BYTE;
+	
+	//EL2008 (T3) Output	
+	bInT3_EIP 			AT %I* :BYTE;
+	bOutT3_PLC 			AT %Q* :BYTE;
+	
+	
+//--- Status EIP -------------------
+	//EL6652-0010 (T23)
+	
+	//EL6652 (D4-Box28) 	
+	uintD4_B17_EIB_state AT %I* :UINT;
+	uintD4_B17_EIB_constate AT %I* :UINT;
+	
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>
